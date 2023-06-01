@@ -4,6 +4,7 @@ import Container from "components/Container";
 import Statistic from "components/Statistics";
 import FeedbackOptions from "components/FeedbackOptions";
 import Section from "components/Section";
+import Notification from "components/Notification";
 
 
 
@@ -39,19 +40,25 @@ class App extends Component {
     console.log(feedbackOptions);
     return (
       <Container>
-        <Section title={"Please leave feedback"} />
+        <Section title={"Please leave feedback"}>
          <FeedbackOptions
             options={feedbackOptions}
             onLeaveFeedback={this.onFeedbackClick}
-          />        
-         <Section title={"Statistics"} />
-        <Statistic
-          good={this.state.good}
-          neutral={this.state.neutral}
-          bad={this.state.bad}
-          total={this.countTotalFeedback()}
-          positivePercentage={this.countPositiveFeedbackPercentage()}
-        />        
+        />  
+        </Section>
+        <Section title={"Statistics"} >
+          {this.countTotalFeedback() === 0 ? (
+            <Notification message="No feedback given" />
+          ) : (
+            <Statistic
+              good={this.state.good}
+              neutral={this.state.neutral}
+              bad={this.state.bad}
+              total={this.countTotalFeedback()}
+              positivePercentage={this.countPositiveFeedbackPercentage()}
+            />
+          )}
+       </Section>
       </Container>
     );
   }  
